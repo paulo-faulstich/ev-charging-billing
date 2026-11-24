@@ -1,0 +1,3 @@
+charger_id,model,power_kw,sems_station_id,location,status
+CHG-G1,GoodWe HCA G2,7.0,SEMS-PS-001,Garage -1 shared bay A,active
+CHG-G2,GoodWe HCA G2,22.0,SEMS-PS-001,Garage -1 shared bay B,active

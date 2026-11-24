@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+
+# JavaScript
+.next/
+node_modules/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Artefatos locais do Checkpoint A
+/ev_chargeops_local.db
+/apps/api/.data/original-imports/
+
+# Sistema
+.DS_Store

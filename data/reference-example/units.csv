@@ -1,0 +1,6 @@
+unit_id,block,label,type,parking_spaces
+U101,A,Apartment 101,residential,1
+U102,A,Apartment 102,residential,2
+U205,B,Apartment 205,residential,1
+U310,B,Apartment 310,residential,1
+LJ01,Ground,Shop 1,commercial,1
