@@ -660,7 +660,7 @@ function OpinionSummary({
             {[...counts.entries()]
               .map(
                 ([severity, total]) =>
-                  `${total} ${severityCountLabel(severity)}`,
+                  `${total} ${severityCountLabel(severity, total)}`,
               )
               .join(" · ")}
             {decided > 0 ? ` · ${decided} already decided` : ""}

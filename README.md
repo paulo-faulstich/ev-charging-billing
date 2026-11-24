@@ -12,6 +12,8 @@ can be traced back to the source records.
 > of a real charger export, and the building, units, residents, cards and tariffs are a
 > demonstration scenario.
 
+![Overview of a closed month: energy, assigned sessions, daily consumption and the closing opinion](docs/screenshots/dashboard.png)
+
 ## The problem
 
 Shared chargers in residential buildings create a billing problem, not a charging problem. The
@@ -52,6 +54,11 @@ CSV exported from the charger portal (SEMS+)
   line links back to its source record.
 - **Reconciliation.** The difference against the charger's aggregate is shown to the manager
   and is never silently spread across residents.
+
+The invoice explains itself: the total, its three components, every session behind it, and
+what the same energy would have cost in a cheaper time band.
+
+![Invoice for one unit: total, breakdown and the sessions that produced it](docs/screenshots/invoice.png)
 
 ## What it showed
 

@@ -24,14 +24,16 @@ export function findingTitle(code: string): string {
 }
 
 /** Severities as they are counted: "2 critical · 1 warning". */
-const SEVERITY_COUNT_LABELS: Record<string, string> = {
-  critical: "critical",
-  warning: "warnings",
-  info: "notes",
+const SEVERITY_COUNT_LABELS: Record<string, [string, string]> = {
+  critical: ["critical", "critical"],
+  warning: ["warning", "warnings"],
+  info: ["note", "notes"],
 };
 
-export function severityCountLabel(severity: string): string {
-  return SEVERITY_COUNT_LABELS[severity] ?? severity;
+export function severityCountLabel(severity: string, count: number): string {
+  const labels = SEVERITY_COUNT_LABELS[severity];
+  if (labels === undefined) return severity;
+  return count === 1 ? labels[0] : labels[1];
 }
 
 /** The same severities named one at a time. */
