@@ -1,30 +1,29 @@
-const sessionDateFormatter = new Intl.DateTimeFormat("pt-BR", {
+const sessionDateFormatter = new Intl.DateTimeFormat("en-US", {
   day: "2-digit",
   month: "2-digit",
   year: "numeric",
-  hour: "2-digit",
+  hour: "numeric",
   minute: "2-digit",
-  hourCycle: "h23",
+  hour12: true,
   timeZone: "America/Sao_Paulo",
 });
 
-// Numbers and numeric dates keep the Brazilian format the invoices use; month
-// names are words, so they follow the interface language.
-const queueDateFormatter = new Intl.DateTimeFormat("en-GB", {
-  day: "2-digit",
+// Dates and times follow US conventions, like the amounts on the invoices.
+const queueDateFormatter = new Intl.DateTimeFormat("en-US", {
+  day: "numeric",
   month: "short",
-  hour: "2-digit",
+  hour: "numeric",
   minute: "2-digit",
-  hourCycle: "h23",
+  hour12: true,
   timeZone: "America/Sao_Paulo",
 });
 
-const energyFormatter = new Intl.NumberFormat("pt-BR", {
+const energyFormatter = new Intl.NumberFormat("en-US", {
   minimumFractionDigits: 2,
   maximumFractionDigits: 2,
 });
 
-const periodFormatter = new Intl.DateTimeFormat("en-GB", {
+const periodFormatter = new Intl.DateTimeFormat("en-US", {
   month: "long",
   year: "numeric",
   timeZone: "UTC",

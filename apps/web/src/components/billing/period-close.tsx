@@ -30,20 +30,20 @@ import {
 const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "/api";
 
 function formatCents(cents: number): string {
-  const reais = Math.trunc(Math.abs(cents) / 100);
+  const dollars = Math.trunc(Math.abs(cents) / 100);
   const rest = Math.abs(cents) % 100;
-  return `${cents < 0 ? "-" : ""}R$ ${reais.toLocaleString("pt-BR")},${String(rest).padStart(2, "0")}`;
+  return `${cents < 0 ? "-" : ""}$${dollars.toLocaleString("en-US")}.${String(rest).padStart(2, "0")}`;
 }
 
 function formatKwh(value: string): string {
-  return `${Number(value).toLocaleString("pt-BR", {
+  return `${Number(value).toLocaleString("en-US", {
     minimumFractionDigits: 3,
     maximumFractionDigits: 3,
   })} kWh`;
 }
 
 function formatPercent(value: string): string {
-  return `${(Number(value) * 100).toLocaleString("pt-BR", {
+  return `${(Number(value) * 100).toLocaleString("en-US", {
     maximumFractionDigits: 1,
   })}%`;
 }
@@ -537,7 +537,7 @@ function FindingDecision({
  * The reconciliation is already computed in kWh, which is engineer's language.
  * The question a condominium actually argues about is whether the neighbours
  * without an electric car are paying for the ones who have one, and that
- * question is answered in reais or not at all.
+ * question is answered in dollars or not at all.
  */
 function RecoveryStatement({
   readiness,

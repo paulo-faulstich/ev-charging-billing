@@ -28,7 +28,10 @@ type CardsState =
 const LOADING: CardsState = { status: "loading" };
 
 function formatDate(iso: string): string {
-  return new Date(iso).toLocaleDateString("pt-BR", {
+  return new Date(iso).toLocaleDateString("en-US", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
     timeZone: "America/Sao_Paulo",
   });
 }

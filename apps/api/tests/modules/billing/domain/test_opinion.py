@@ -101,7 +101,7 @@ def test_non_positive_energy_blocks():
 
 
 def test_power_above_the_nameplate_blocks_and_shows_the_arithmetic():
-    """9,4 kWh in half an hour is 18,8 kW on an 11 kW charger."""
+    """9.4 kWh in half an hour is 18.8 kW on an 11 kW charger."""
     opinion = analyze([*routine(), charge("9.4", hours=0.5, day=14)])
     finding = next(f for f in opinion.findings if f.code == POWER_EXCEEDS_RATED)
     assert finding.severity is Severity.CRITICAL

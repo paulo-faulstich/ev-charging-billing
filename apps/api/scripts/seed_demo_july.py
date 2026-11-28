@@ -176,12 +176,12 @@ def main() -> None:
         if code != 200:
             raise SystemExit(f"Closing failed: {code} {body}")
         total = sum(invoice["totalCents"] for invoice in body["invoices"]) / 100
-        print(f"Period closed: {len(body['invoices'])} invoices, R$ {total:.2f}")
+        print(f"Period closed: {len(body['invoices'])} invoices, ${total:.2f}")
         for invoice in body["invoices"]:
             print(
                 f"  {invoice['unitCode']:6} {invoice['contactLabel']:20}"
                 f" {invoice['energyKwh']:>10} kWh"
-                f"  R$ {invoice['totalCents'] / 100:8.2f}"
+                f"  ${invoice['totalCents'] / 100:8.2f}"
             )
 
 

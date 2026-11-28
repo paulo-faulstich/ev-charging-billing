@@ -11,13 +11,13 @@ import { PageBreadcrumb } from "@/components/shell/page-breadcrumb";
 const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "/api";
 
 function formatCents(cents: number): string {
-  const reais = Math.trunc(Math.abs(cents) / 100);
+  const dollars = Math.trunc(Math.abs(cents) / 100);
   const rest = Math.abs(cents) % 100;
-  return `${cents < 0 ? "-" : ""}R$ ${reais.toLocaleString("pt-BR")},${String(rest).padStart(2, "0")}`;
+  return `${cents < 0 ? "-" : ""}$${dollars.toLocaleString("en-US")}.${String(rest).padStart(2, "0")}`;
 }
 
 function formatKwh(value: string): string {
-  return `${Number(value).toLocaleString("pt-BR", {
+  return `${Number(value).toLocaleString("en-US", {
     minimumFractionDigits: 3,
     maximumFractionDigits: 3,
   })} kWh`;

@@ -159,7 +159,7 @@ test("uses canonical unknown assignments for the monthly blocker", async ({
 
   await expect(page.getByText("August 2026", { exact: true })).toBeVisible();
   await expect(
-    page.getByLabel("Period indicators").getByText("10,50 kWh", {
+    page.getByLabel("Period indicators").getByText("10.50 kWh", {
       exact: true,
     }),
   ).toBeVisible();

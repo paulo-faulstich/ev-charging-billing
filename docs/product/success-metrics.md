@@ -72,7 +72,7 @@ the events needed to measure them.
 | M-13 | Demonstrable forecasting | **Deferred to P1.** Metric preserved unchanged | — |
 | M-14 | Reproducible segmentation | **Deferred to P1.** Metric preserved unchanged | — |
 | M-15 | AI traceability | 100% of results presented have an algorithm version and a dataset reference | Audit query |
-| M-16 | Comparison with the original worked example | Energy and losses preserved per unit; equal totals for single-user units; explicit reduction of R$ 25.00 for U102 from the single fee. Includes the three exceptional cases | Golden tests and the justification in section 4.4 of the PRD |
+| M-16 | Comparison with the original worked example | Energy and losses preserved per unit; equal totals for single-user units; explicit reduction of $25.00 for U102 from the single fee. Includes the three exceptional cases | Golden tests and the justification in section 4.4 of the PRD |
 | M-17 | External reconciliation | The difference between billed energy and the charger aggregate is computed and shown at closing, never absorbed silently | Closing report |
 | M-18 | Invoice immutability | Changing tariff or policy after issuing does not change any amount on an invoice already issued | Domain test |
 | M-19 | Explicit approval | 0 invoices issued without an approval action recorded with actor and instant | Audit query |

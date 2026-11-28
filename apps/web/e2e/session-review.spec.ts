@@ -280,32 +280,32 @@ test("assigns observed evidence and advances the pending queue", async ({
   ).toBeVisible();
   await expect(page.getByText("2 pending items in the period")).toBeVisible();
 
-  const secondRow = queue(page).getByRole("row", { name: /3,50 kWh/ });
+  const secondRow = queue(page).getByRole("row", { name: /3\.50 kWh/ });
   await expect(secondRow).not.toHaveAttribute("tabindex");
   const secondSessionButton = secondRow.getByRole("button", {
-    name: /3,50 kWh/,
+    name: /3\.50 kWh/,
   });
   await secondSessionButton.focus();
   await secondSessionButton.press("Enter");
   await expect(
     page.getByRole("region", { name: "Session evidence" }),
-  ).toContainText("3,50 kWh");
+  ).toContainText("3.50 kWh");
   await queue(page)
-    .getByRole("row", { name: /7,00 kWh/ })
-    .getByRole("button", { name: /7,00 kWh/ })
+    .getByRole("row", { name: /7\.00 kWh/ })
+    .getByRole("button", { name: /7\.00 kWh/ })
     .click();
 
   const evidence = page.getByRole("region", { name: "Session evidence" });
-  await expect(evidence).toContainText("7,00 kWh");
-  await expect(evidence).toContainText("29/08/2026, 17:10");
+  await expect(evidence).toContainText("7.00 kWh");
+  await expect(evidence).toContainText("08/29/2026, 5:10 PM");
   await expect(evidence).toContainText("STN00DEMO0000001");
   await expect(evidence).toContainText("Real measurement · SEMS+ CSV");
 
   await page.getByLabel("Responsible unit").selectOption(UNIT_A_ID);
   await page.getByLabel("Justification").fill("Confirmed by the front desk");
 
-  await expect(evidence).toContainText("7,00 kWh");
-  await expect(evidence).toContainText("29/08/2026, 17:10");
+  await expect(evidence).toContainText("7.00 kWh");
+  await expect(evidence).toContainText("08/29/2026, 5:10 PM");
   await expect(evidence).toContainText("STN00DEMO0000001");
   await expect(evidence).toContainText("Real measurement · SEMS+ CSV");
 
@@ -320,8 +320,8 @@ test("assigns observed evidence and advances the pending queue", async ({
   await expect(page.getByRole("status")).toContainText("Unit A-101");
   await expect(page.getByText("1 pending item in the period")).toBeVisible();
   await expect(page.getByLabel("Justification")).toHaveValue("");
-  await expect(queue(page).getByRole("row", { name: /7,00 kWh/ })).toHaveCount(0);
-  await expect(evidence).toContainText("3,50 kWh");
+  await expect(queue(page).getByRole("row", { name: /7\.00 kWh/ })).toHaveCount(0);
+  await expect(evidence).toContainText("3.50 kWh");
 
   await page.screenshot({
     path: "test-results/task5-session-review-desktop.png",
@@ -373,12 +373,12 @@ test("freezes the visible review context while an assignment is in flight", asyn
     await expect(page.getByLabel("Justification")).toBeDisabled();
     await expect(
       queue(page)
-        .getByRole("row", { name: /3,50 kWh/ })
-        .getByRole("button", { name: /3,50 kWh/ }),
+        .getByRole("row", { name: /3\.50 kWh/ })
+        .getByRole("button", { name: /3\.50 kWh/ }),
     ).toBeDisabled();
     await expect(
       page.getByRole("region", { name: "Session evidence" }),
-    ).toContainText("7,00 kWh");
+    ).toContainText("7.00 kWh");
   } finally {
     releaseAssignment();
   }
@@ -388,7 +388,7 @@ test("freezes the visible review context while an assignment is in flight", asyn
   );
   await expect(
     page.getByRole("region", { name: "Session evidence" }),
-  ).toContainText("3,50 kWh");
+  ).toContainText("3.50 kWh");
 });
 
 test("ignores an August assignment completion after external navigation loads July", async ({
@@ -427,7 +427,7 @@ test("ignores an August assignment completion after external navigation loads Ju
   );
   await expect(page.getByText("July 2026", { exact: true })).toBeVisible();
   const evidence = page.getByRole("region", { name: "Session evidence" });
-  await expect(evidence).toContainText("4,25 kWh");
+  await expect(evidence).toContainText("4.25 kWh");
 
   const assignmentResponse = page.waitForResponse(
     (response) =>
@@ -447,8 +447,8 @@ test("ignores an August assignment completion after external navigation loads Ju
     "/sessions?status=pending_review&period=2026-07",
   );
   await expect(page.getByText("July 2026", { exact: true })).toBeVisible();
-  await expect(evidence).toContainText("4,25 kWh");
-  await expect(evidence).not.toContainText("3,50 kWh");
+  await expect(evidence).toContainText("4.25 kWh");
+  await expect(evidence).not.toContainText("3.50 kWh");
 });
 
 test("hides August evidence while a canonical July load is pending", async ({
@@ -470,7 +470,7 @@ test("hides August evidence while a canonical July load is pending", async ({
   await page.goto("/sessions?status=pending_review&period=2026-08");
   await expect(
     page.getByRole("region", { name: "Session evidence" }),
-  ).toContainText("7,00 kWh");
+  ).toContainText("7.00 kWh");
 
   await page.evaluate(() => {
     window.history.pushState(
@@ -492,7 +492,7 @@ test("hides August evidence while a canonical July load is pending", async ({
 
   await expect(
     page.getByRole("region", { name: "Session evidence" }),
-  ).toContainText("4,25 kWh");
+  ).toContainText("4.25 kWh");
 });
 
 test("uses roving focus and arrow keys across session actions", async ({ page }) => {
@@ -500,11 +500,11 @@ test("uses roving focus and arrow keys across session actions", async ({ page })
   await page.goto("/sessions?status=pending_review&period=2026-08");
 
   const firstButton = queue(page)
-    .getByRole("row", { name: /7,00 kWh/ })
-    .getByRole("button", { name: /7,00 kWh/ });
+    .getByRole("row", { name: /7\.00 kWh/ })
+    .getByRole("button", { name: /7\.00 kWh/ });
   const secondButton = queue(page)
-    .getByRole("row", { name: /3,50 kWh/ })
-    .getByRole("button", { name: /3,50 kWh/ });
+    .getByRole("row", { name: /3\.50 kWh/ })
+    .getByRole("button", { name: /3\.50 kWh/ });
   await expect(firstButton).toHaveAttribute("tabindex", "0");
   await expect(secondButton).toHaveAttribute("tabindex", "-1");
 
@@ -516,7 +516,7 @@ test("uses roving focus and arrow keys across session actions", async ({ page })
   await expect(secondButton).toHaveAttribute("tabindex", "0");
   await expect(
     page.getByRole("region", { name: "Session evidence" }),
-  ).toContainText("3,50 kWh");
+  ).toContainText("3.50 kWh");
 
   await page.keyboard.press("Tab");
   await expect(page.getByLabel("Responsible unit")).toBeFocused();
@@ -534,12 +534,12 @@ test("keeps start and energy values in distinct associated table columns", async
   await expect(headers.nth(0)).toHaveAttribute("id", "session-start-heading");
   await expect(headers.nth(1)).toHaveAttribute("id", "session-energy-heading");
 
-  const row = table.getByRole("row", { name: /7,00 kWh/ });
+  const row = table.getByRole("row", { name: /7\.00 kWh/ });
   const cells = row.getByRole("cell");
   await expect(cells).toHaveCount(2);
   await expect(cells.nth(0)).toHaveAttribute("headers", "session-start-heading");
   await expect(cells.nth(1)).toHaveAttribute("headers", "session-energy-heading");
-  await expect(row.getByRole("button", { name: /7,00 kWh/ })).toBeVisible();
+  await expect(row.getByRole("button", { name: /7\.00 kWh/ })).toBeVisible();
 });
 
 test("canonicalizes a contradictory session status before showing the queue", async ({
@@ -609,8 +609,8 @@ test("keeps assignment evidence and inputs after a recoverable PUT error", async
 
   await page.goto("/sessions?status=pending_review&period=2026-08");
   await queue(page)
-    .getByRole("row", { name: /7,00 kWh/ })
-    .getByRole("button", { name: /7,00 kWh/ })
+    .getByRole("row", { name: /7\.00 kWh/ })
+    .getByRole("button", { name: /7\.00 kWh/ })
     .click();
   await page.getByLabel("Responsible unit").selectOption(UNIT_A_ID);
   await page.getByLabel("Justification").fill("Confirmed by the front desk");
@@ -627,7 +627,7 @@ test("keeps assignment evidence and inputs after a recoverable PUT error", async
   );
   await expect(
     page.getByRole("region", { name: "Session evidence" }),
-  ).toContainText("7,00 kWh");
+  ).toContainText("7.00 kWh");
   await expect(
     page.getByRole("button", { name: "Assign and review next" }),
   ).toBeEnabled();
@@ -720,5 +720,5 @@ test("recovers the queue after a parallel load failure", async ({ page }) => {
   await page.getByRole("button", { name: "Refresh queue" }).click();
 
   await expect(page.getByText("2 pending items in the period")).toBeVisible();
-  await expect(queue(page).getByRole("row", { name: /7,00 kWh/ })).toBeVisible();
+  await expect(queue(page).getByRole("row", { name: /7\.00 kWh/ })).toBeVisible();
 });

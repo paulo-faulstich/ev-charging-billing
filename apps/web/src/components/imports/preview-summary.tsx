@@ -9,13 +9,13 @@ export function PreviewSummary({ preview }: { preview: ImportPreviewResponse }) 
   ] as const;
 
   return (
-    <section aria-label="Analysis summary" className="grid gap-px overflow-hidden border border-[#213849] bg-[#213849] sm:grid-cols-2 xl:grid-cols-4">
+    <section aria-label="Analysis summary" className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
       {cards.map(([value, label, detail]) => (
-        <div key={label} className="bg-[#0b1b28] px-5 py-5 sm:px-6">
-          <p className="font-mono text-3xl font-semibold tracking-[-0.06em] text-white">
-            {value} <span className="text-sm font-normal tracking-normal text-[#c2d2dc]">{label}</span>
+        <div key={label} className="rounded-[20px] border border-white/75 bg-[var(--panel)] px-5 py-5 shadow-[0_18px_40px_-22px_rgba(40,58,92,0.28)] backdrop-blur-xl sm:px-6">
+          <p className="text-3xl font-semibold tracking-[-0.06em] text-[var(--ink)]">
+            {value} <span className="text-sm font-normal tracking-normal text-[var(--ink-2)]">{label}</span>
           </p>
-          <p className="mt-2 text-sm text-[#90a7b8]">{detail}</p>
+          <p className="mt-2 text-sm text-[var(--muted)]">{detail}</p>
         </div>
       ))}
     </section>

@@ -65,29 +65,28 @@ export type DashboardSummary = {
   responsibleConsumption: ResponsibleConsumption[];
 };
 
-// Month names follow the interface language; numbers keep the Brazilian
-// format used on the invoices.
-const periodFormatter = new Intl.DateTimeFormat("en-GB", {
+// Dates and times follow US conventions, like the amounts on the invoices.
+const periodFormatter = new Intl.DateTimeFormat("en-US", {
   month: "long",
   year: "numeric",
   timeZone: SITE_TIME_ZONE,
 });
 
-const dayFormatter = new Intl.DateTimeFormat("en-GB", {
-  day: "2-digit",
+const dayFormatter = new Intl.DateTimeFormat("en-US", {
+  day: "numeric",
   month: "short",
   timeZone: "UTC",
 });
 
-const dayNumberFormatter = new Intl.DateTimeFormat("pt-BR", {
+const dayNumberFormatter = new Intl.DateTimeFormat("en-US", {
   day: "2-digit",
   timeZone: "UTC",
 });
 
-const updatedFormatter = new Intl.DateTimeFormat("en-GB", {
-  day: "2-digit",
+const updatedFormatter = new Intl.DateTimeFormat("en-US", {
+  day: "numeric",
   month: "short",
-  hour: "2-digit",
+  hour: "numeric",
   minute: "2-digit",
   timeZone: SITE_TIME_ZONE,
 });

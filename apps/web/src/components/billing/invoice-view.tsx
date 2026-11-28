@@ -23,14 +23,14 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "/api";
  */
 function formatCents(cents: number): string {
   const sign = cents < 0 ? "-" : "";
-  const reais = Math.trunc(Math.abs(cents) / 100);
+  const dollars = Math.trunc(Math.abs(cents) / 100);
   const rest = Math.abs(cents) % 100;
-  const grouped = reais.toLocaleString("pt-BR");
-  return `${sign}R$ ${grouped},${String(rest).padStart(2, "0")}`;
+  const grouped = dollars.toLocaleString("en-US");
+  return `${sign}$${grouped}.${String(rest).padStart(2, "0")}`;
 }
 
 function formatKwh(value: string): string {
-  return `${Number(value).toLocaleString("pt-BR", {
+  return `${Number(value).toLocaleString("en-US", {
     minimumFractionDigits: 3,
     maximumFractionDigits: 3,
   })} kWh`;
@@ -42,16 +42,21 @@ function formatRate(centsPerKwh: number): string {
 
 function formatDate(isoDate: string): string {
   const [year, month, day] = isoDate.split("-");
-  return `${day}/${month}/${year}`;
+  return `${month}/${day}/${year}`;
 }
 
 function dateTimeParts(iso: string, timeZone: string) {
   const value = new Date(iso);
   return {
-    date: value.toLocaleDateString("pt-BR", { timeZone }),
-    time: value.toLocaleTimeString("pt-BR", {
+    date: value.toLocaleDateString("en-US", {
       timeZone,
-      hour: "2-digit",
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    }),
+    time: value.toLocaleTimeString("en-US", {
+      timeZone,
+      hour: "numeric",
       minute: "2-digit",
     }),
   };
@@ -349,7 +354,7 @@ export function InvoiceView({
           <div>
             <dt>Technical losses</dt>
             <dd>
-              {(context.lossBasisPoints / 100).toLocaleString("pt-BR", {
+              {(context.lossBasisPoints / 100).toLocaleString("en-US", {
                 minimumFractionDigits: 2,
               })}
               % of the energy
@@ -382,7 +387,7 @@ export function InvoiceView({
               by the price of the time band in which it started. The three
               bands above are the same ones the utility uses on the building&apos;s
               electricity bill — peak is the early evening, when the grid is
-              most loaded and energy costs more. A session that starts at 22:00
+              most loaded and energy costs more. A session that starts at 10:00 PM
               pays the overnight price for all of it, even if it ends in the
               morning: the meter reports the session total, not minute by
               minute.
@@ -398,7 +403,7 @@ export function InvoiceView({
               meter and the car, part of the energy is lost on the way — cable,
               conversion, heat. The building pays for it, so it is split in
               proportion to what each unit consumed:{" "}
-              {(context.lossBasisPoints / 100).toLocaleString("pt-BR", {
+              {(context.lossBasisPoints / 100).toLocaleString("en-US", {
                 minimumFractionDigits: 2,
               })}
               % of the energy on each invoice.

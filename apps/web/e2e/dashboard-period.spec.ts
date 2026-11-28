@@ -132,5 +132,5 @@ test("buckets a late-evening session into the local day, not the UTC one", async
   await expect(page.getByText("May 2026", { exact: true })).toBeVisible();
   // The axis shows the day alone so a month fits, but keeps the full date in
   // data-date. Asserting on that proves which local day the bar belongs to.
-  await expect(page.locator('.usage-label[data-date="31 May"]')).toBeVisible();
+  await expect(page.locator('.usage-label[data-date="May 31"]')).toBeVisible();
 });

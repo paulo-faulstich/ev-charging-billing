@@ -39,15 +39,20 @@ test("separates the product identity from the GoodWe installation context", asyn
   await page.goto("/dashboard");
 
   const productIdentity = page.locator(".product-identity");
+  // The partnership mark lives at the foot of the rail, away from the product's
+  // own name, and in the interface's ink rather than the partner's red.
+  const partnership = page.locator(".product-rail .product-partnership");
   const appHeader = page.getByRole("banner");
 
   await expect(
-    productIdentity.getByRole("img", {
+    partnership.getByRole("img", {
       name: "GoodWe: Smart Energy Innovator",
     }),
   ).toBeVisible();
-  await expect(productIdentity.getByText("FIAP Challenge")).toBeVisible();
-  const fiapMetrics = await productIdentity
+  await expect(partnership.getByText("FIAP Challenge")).toBeVisible();
+  await expect(productIdentity.getByText("FIAP Challenge")).toHaveCount(0);
+  await expect(productIdentity.getByRole("img")).toHaveCount(0);
+  const fiapMetrics = await partnership
     .getByText("FIAP Challenge")
     .evaluate((element) => ({
       fontSize: Number.parseFloat(getComputedStyle(element).fontSize),
@@ -57,10 +62,10 @@ test("separates the product identity from the GoodWe installation context", asyn
   const productFontFamily = await productIdentity
     .getByText("EV ChargeOps")
     .evaluate((element) => getComputedStyle(element).fontFamily);
-  const crossFontSize = await productIdentity
+  const crossFontSize = await partnership
     .getByText("×")
     .evaluate((element) => Number.parseFloat(getComputedStyle(element).fontSize));
-  const goodWeHeight = await productIdentity
+  const goodWeHeight = await partnership
     .getByRole("img", { name: "GoodWe: Smart Energy Innovator" })
     .evaluate((element) => element.getBoundingClientRect().height);
   expect(fiapMetrics.fontFamily).toBe(productFontFamily);

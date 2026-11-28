@@ -26,7 +26,7 @@ end to end, with everything else pushed to P1.
 | Pix payment (Mercado Pago sandbox) leaves the scope | The challenge brief describes the charge as *a pass-through on the building's monthly fee*, not a one-off payment. The invoice is the deliverable; a payment gateway adds nothing to the building's problem |
 | Forecasting and segmentation move to P1 | Both depend on history. Neither protects the integrity of the invoice, which is the axis of this cut |
 | Anomaly detection becomes the closing opinion and stays in P0 | It is the only analytical capability that acts **before** the invoice and can block issuing. The analysis works as part of the product's logic, not as decoration |
-| The allocation formula from the original proposal becomes the implementation contract | It was already specified with a worked example; energy and losses are preserved, and the divergence in the per-unit fee is documented in section 4.4. It replaces the `R$ 0.94/kWh` constant that was hardcoded in the frontend |
+| The allocation formula from the original proposal becomes the implementation contract | It was already specified with a worked example; energy and losses are preserved, and the divergence in the per-unit fee is documented in section 4.4. It replaces the `$0.94/kWh` constant that was hardcoded in the frontend |
 | The unit is the target of the assignment; the resident appears through the active link | The original proposal assumed identity by RFID. The field invalidated that premise: the reference charger has no cards configured, the `Card ID` repeats the equipment serial in **every session of the eight-month export**, the `RFID Card Name` column is empty, and the GoodWe OpenAPI exposes no identity field. The premise changed, not the plan |
 | A registered card assigns on its own; the manager overrides when deciding | The equipment supports RFID and the report reserves columns for the cardholder. What does not exist in the vendor's data is the link between card, unit and billing. The card registry builds that bridge once, and automatic assignment then applies to every later session; `session_assignments.origin` keeps the two origins distinguishable for audit |
 | The resident view is the invoice itself, reached by impersonation | One artifact serves both roles, with authorization as the filter. It avoids building two screens and avoids switching logins in the middle of a demo |
@@ -146,8 +146,8 @@ invoice(unit, month) = individual_energy + infra_fee + loss_share
 ```
 
 - The system stores tariffs versioned by validity, source and capture date.
-- The reference values from the original proposal are peak `R$ 1.25/kWh`, mid-peak
-  `R$ 0.95/kWh` and off-peak `R$ 0.78/kWh`, an infrastructure fee of `R$ 25.00` per unit
+- The reference values from the original proposal are peak `$1.25/kWh`, mid-peak
+  `$0.95/kWh` and off-peak `$0.78/kWh`, an infrastructure fee of `$25.00` per unit
   active in the month, and losses of `4%` over individual energy.
 - The calculation identifies which tariff band applies to each session.
 - Monetary values are computed and stored in integer cents.
@@ -166,8 +166,8 @@ Exceptional cases, as in the original proposal:
   displayed without changing who is financially responsible.
 
   **Recorded divergence from the original proposal.** The original proposal billed per RFID
-  user, so unit U102, with two vehicles, paid the infrastructure fee twice (R$ 50.00). In the
-  per-unit model it pays once (R$ 25.00). That unit's energy and losses reproduce exactly; the
+  user, so unit U102, with two vehicles, paid the infrastructure fee twice ($50.00). In the
+  per-unit model it pays once ($25.00). That unit's energy and losses reproduce exactly; the
   difference has one cause and one line. The reason is that field data cannot tell two
   vehicles apart — the reference charger has no cards configured and the GoodWe OpenAPI
   exposes no identity field — so billing per unit is the only rule the data supports, and the

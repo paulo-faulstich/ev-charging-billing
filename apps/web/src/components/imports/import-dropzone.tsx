@@ -16,7 +16,7 @@ import { PreviewTable } from "./preview-table";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "/api";
 
-const periodFormatter = new Intl.DateTimeFormat("en-GB", {
+const periodFormatter = new Intl.DateTimeFormat("en-US", {
   month: "long",
   year: "numeric",
   timeZone: "UTC",
@@ -182,18 +182,18 @@ export function ImportDropzone({ accessToken }: { accessToken: string }) {
     return (
       <div className="data-source-workflow">
         <div className="space-y-6 sm:space-y-8">
-          <div className="flex flex-wrap items-end justify-between gap-4 border-l-2 border-cyan-300 bg-cyan-300/[0.045] px-4 py-4 sm:px-5">
+          <div className="flex flex-wrap items-end justify-between gap-4 rounded-[14px] bg-[var(--accent-soft)] px-4 py-4 sm:px-5">
             <div>
-              <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.17em] text-cyan-200">Preview complete</p>
-              <p className="mt-2 font-mono text-sm text-white">{preview.filename}</p>
-              <p className="mt-1 text-sm text-[#90a7b8]">
+              <p className="text-[0.78rem] font-semibold text-[var(--muted)]">Preview complete</p>
+              <p className="mt-2 text-sm text-[var(--ink)]">{preview.filename}</p>
+              <p className="mt-1 text-sm text-[var(--muted)]">
                 {confirmation
                   ? "Batch recorded in the operational history."
                   : "No records were saved."}
               </p>
             </div>
             {!confirmation ? (
-              <button type="button" onClick={reset} className="border border-[#426071] px-4 py-2.5 text-sm font-medium text-white transition-colors hover:border-cyan-300 hover:bg-cyan-300/10">
+              <button type="button" onClick={reset} className="rounded-xl border border-[var(--line-strong)] bg-white/70 px-4 py-2.5 text-sm font-semibold text-[var(--ink)] transition-colors hover:bg-white">
                 Review another file
               </button>
             ) : null}
@@ -259,10 +259,10 @@ export function ImportDropzone({ accessToken }: { accessToken: string }) {
     <div className="data-source-workflow">
       <section
         aria-labelledby="upload-title"
-        className={`border p-5 transition-colors sm:p-8 lg:p-10 ${
+        className={`rounded-[20px] border p-5 backdrop-blur-xl transition-colors sm:p-8 lg:p-10 ${
           isDragging
-            ? "border-solid border-cyan-200 bg-[#102a38] ring-1 ring-cyan-200/60 shadow-[0_0_28px_rgba(34,211,238,0.16)]"
-            : "border-dashed border-cyan-300/45 bg-[#0b1b28]"
+            ? "border-solid border-[var(--cyan)] bg-white/80 ring-4 ring-[var(--accent-soft)] shadow-[0_18px_40px_-22px_rgba(40,58,92,0.45)]"
+            : "border-dashed border-[var(--line-strong)] bg-[var(--panel)] shadow-[0_18px_40px_-22px_rgba(40,58,92,0.28)]"
         }`}
         onDragEnter={handleDragEnter}
         onDragLeave={handleDragLeave}
@@ -271,19 +271,19 @@ export function ImportDropzone({ accessToken }: { accessToken: string }) {
       >
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_16rem] lg:items-end">
           <div>
-          <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-cyan-200">Step 01 · data source</p>
-          <h2 id="upload-title" className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-white">Select the SEMS+ export</h2>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-[#90a7b8]">The analysis checks every row and shows its classification before any import batch is created.</p>
+          <p className="text-[0.78rem] font-semibold text-[var(--muted)]">Step 01 · data source</p>
+          <h2 id="upload-title" className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-[var(--ink)]">Select the SEMS+ export</h2>
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-[var(--muted)]">The analysis checks every row and shows its classification before any import batch is created.</p>
 
-          <label htmlFor="sems-file" className="mt-7 block text-sm font-medium text-white">SEMS+ CSV file</label>
-          <p id="upload-guidance" className={`mt-2 text-sm ${isDragging ? "font-medium text-cyan-100" : "text-[#90a7b8]"}`}>
+          <label htmlFor="sems-file" className="mt-7 block text-sm font-medium text-[var(--ink)]">SEMS+ CSV file</label>
+          <p id="upload-guidance" className={`mt-2 text-sm ${isDragging ? "font-medium text-[var(--cyan)]" : "text-[var(--muted)]"}`}>
             {isDragging ? "Drop the CSV to select it" : "Drag and drop the CSV onto this panel or use the picker below."}
           </p>
           <input
             id="sems-file"
             ref={fileInputRef}
             aria-describedby="upload-guidance"
-            className="mt-3 block w-full max-w-2xl cursor-pointer border border-[#426071] bg-[#07131d] px-3 py-2 text-sm text-[#c2d2dc] file:mr-4 file:border-0 file:bg-cyan-300 file:px-3 file:py-1.5 file:text-sm file:font-semibold file:text-[#07131d]"
+            className="mt-3 block w-full max-w-2xl cursor-pointer rounded-xl border border-[var(--line-strong)] bg-white/75 px-3 py-2 text-sm text-[var(--ink-2)] file:mr-4 file:rounded-lg file:border-0 file:bg-[var(--navy)] file:px-3 file:py-1.5 file:text-sm file:font-semibold file:text-white"
             type="file"
             accept=".csv,text/csv"
             disabled={loading}
@@ -291,23 +291,23 @@ export function ImportDropzone({ accessToken }: { accessToken: string }) {
               selectFile(event.target.files?.[0] ?? null);
             }}
           />
-          {file ? <p className="mt-3 font-mono text-xs text-cyan-100">Selected: {file.name}</p> : <p className="mt-3 text-sm text-[#90a7b8]">No file selected.</p>}
+          {file ? <p className="mt-3 text-xs text-[var(--cyan)]">Selected: {file.name}</p> : <p className="mt-3 text-sm text-[var(--muted)]">No file selected.</p>}
           </div>
 
-          <aside className="border-l border-[#213849] pl-5 text-sm leading-6 text-[#b8c9d4]">
-            <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#90a7b8]">What you will see</p>
+          <aside className="border-l border-[var(--line)] pl-5 text-sm leading-6 text-[var(--ink-2)]">
+            <p className="text-[0.78rem] font-semibold text-[var(--muted)]">What you will see</p>
             <p className="mt-2">Status per row, energy, charger and provenance signals.</p>
           </aside>
         </div>
 
-        {loading ? <p role="status" className="mt-6 border-l-2 border-cyan-300 px-3 text-sm text-cyan-100">Reading and classifying the sessions…</p> : null}
-        {error ? <div role="alert" className="mt-6 border-l-2 border-rose-300 bg-rose-300/[0.06] px-4 py-3 text-sm leading-6 text-rose-100">{error}</div> : null}
+        {loading ? <p role="status" className="mt-6 rounded-[14px] bg-[var(--accent-soft)] px-4 py-3 text-sm text-[var(--cyan)]">Reading and classifying the sessions…</p> : null}
+        {error ? <div role="alert" className="mt-6 rounded-[14px] bg-[var(--danger-soft)] px-4 py-3 text-sm leading-6 text-[var(--coral)]">{error}</div> : null}
 
         <div className="mt-7 flex flex-wrap items-center gap-3">
-          <button type="button" disabled={!file || loading} onClick={analyze} className="bg-[#ff6b57] px-5 py-3 text-sm font-semibold text-[#1e0b08] transition-colors hover:bg-[#ff8675] disabled:cursor-not-allowed disabled:opacity-45">
+          <button type="button" disabled={!file || loading} onClick={analyze} className="rounded-xl bg-[var(--navy)] px-5 py-3 text-sm font-semibold text-white shadow-[0_12px_20px_-12px_rgba(30,39,66,0.85)] transition-colors hover:bg-[#2b3658] disabled:cursor-not-allowed disabled:opacity-45">
             {loading ? "Analysing…" : "Analyse file"}
           </button>
-          {error && file ? <button type="button" onClick={analyze} className="border border-[#426071] px-4 py-3 text-sm font-medium text-white transition-colors hover:border-cyan-300 hover:bg-cyan-300/10">Try again</button> : null}
+          {error && file ? <button type="button" onClick={analyze} className="rounded-xl border border-[var(--line-strong)] bg-white/70 px-4 py-3 text-sm font-semibold text-[var(--ink)] transition-colors hover:bg-white">Try again</button> : null}
         </div>
       </section>
 

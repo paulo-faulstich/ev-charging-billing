@@ -7,7 +7,7 @@ from uuid import UUID
 from app.modules.billing.domain.invoice import InvoiceItemView, InvoiceView
 from app.modules.billing.domain.rendering import (
     InvoiceDocumentContext,
-    format_brl,
+    format_usd,
     invoice_document_lines,
     provenance_label,
 )
@@ -70,10 +70,10 @@ def _item() -> InvoiceItemView:
     )
 
 
-def test_format_brl_groups_thousands_with_comma_cents() -> None:
-    assert format_brl(0) == "R$ 0,00"
-    assert format_brl(55) == "R$ 0,55"
-    assert format_brl(1_234_56) == "R$ 1.234,56"
+def test_format_usd_groups_thousands_and_prints_cents() -> None:
+    assert format_usd(0) == "$0.00"
+    assert format_usd(55) == "$0.55"
+    assert format_usd(1_234_56) == "$1,234.56"
 
 
 def test_lines_state_the_stored_integers_without_recomputing() -> None:
@@ -82,20 +82,20 @@ def test_lines_state_the_stored_integers_without_recomputing() -> None:
     invoice = _invoice((_item(),), energy_value_cents=9999, total_cents=1)
     lines = invoice_document_lines(invoice, _context())
 
-    assert "Energy: R$ 99,99" in lines
-    assert "Total: R$ 0,01" in lines
-    assert any("R$ 13,13" in line for line in lines)
+    assert "Energy: $99.99" in lines
+    assert "Total: $0.01" in lines
+    assert any("$13.13" in line for line in lines)
 
 
 def test_item_times_are_shown_in_the_site_timezone() -> None:
-    """21:30 UTC on 10 May is 18:30 in São Paulo, the peak band."""
+    """21:30 UTC on 10 May is 6:30 PM in São Paulo, the peak band."""
     invoice = _invoice((_item(),), energy_value_cents=1313, total_cents=3868)
     lines = invoice_document_lines(invoice, _context())
 
     item_line = next(line for line in lines if "Peak" in line)
-    assert "10/05/2026 18:30 to 20:45" in item_line
+    assert "05/10/2026 6:30 PM to 8:45 PM" in item_line
     assert "(2h15)" in item_line
-    assert "10,500 kWh" in item_line
+    assert "10.500 kWh" in item_line
     assert "125 cents/kWh" in item_line
 
 
@@ -126,9 +126,9 @@ def test_tariff_block_cites_source_and_validity() -> None:
     assert (
         "Tariff: Reference tariff (source: Reference table)"
     ) in lines
-    assert "Validity: 01/01/2026 to 31/12/2026" in lines
+    assert "Validity: 01/01/2026 to 12/31/2026" in lines
     assert (
         "Allocation policy: Reference tariff "
-        "(fee R$ 25,00 per active unit, losses 4,00%)"
+        "(fee $25.00 per active unit, losses 4.00%)"
     ) in lines
     assert "Tariff reference: README.md section 5.2" in lines

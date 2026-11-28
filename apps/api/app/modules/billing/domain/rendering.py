@@ -38,19 +38,24 @@ class InvoiceRenderer(Protocol):
     ) -> bytes: ...
 
 
-def format_brl(cents: int) -> str:
+def format_usd(cents: int) -> str:
     sign = "-" if cents < 0 else ""
-    reais, rest = divmod(abs(cents), 100)
-    grouped = f"{reais:,}".replace(",", ".")
-    return f"{sign}R$ {grouped},{rest:02d}"
+    dollars, rest = divmod(abs(cents), 100)
+    return f"{sign}${dollars:,}.{rest:02d}"
 
 
 def format_kwh(value: Decimal) -> str:
-    return f"{value:.3f}".replace(".", ",") + " kWh"
+    return f"{value:.3f} kWh"
 
 
 def format_date(value: date) -> str:
-    return value.strftime("%d/%m/%Y")
+    return value.strftime("%m/%d/%Y")
+
+
+def format_time(value: datetime) -> str:
+    """A 12-hour clock without the leading zero: 6:30 PM, not 06:30 PM."""
+    meridiem = "AM" if value.hour < 12 else "PM"
+    return f"{value.hour % 12 or 12}:{value.minute:02d} {meridiem}"
 
 
 def _local(value: datetime, timezone: str) -> datetime:
@@ -58,7 +63,7 @@ def _local(value: datetime, timezone: str) -> datetime:
 
 
 def _percent(basis_points: int) -> str:
-    return f"{basis_points / 100:.2f}%".replace(".", ",")
+    return f"{basis_points / 100:.2f}%"
 
 
 def _duration(start: datetime, end: datetime) -> str:
@@ -102,10 +107,10 @@ def invoice_document_lines(
         f"Issued on {format_date(_local(invoice.issued_at, timezone).date())}",
         "",
         "How much and why",
-        f"Energy: {format_brl(invoice.energy_value_cents)}",
-        f"Infrastructure fee: {format_brl(invoice.infra_fee_cents)}",
-        f"Technical losses: {format_brl(invoice.loss_share_cents)}",
-        f"Total: {format_brl(invoice.total_cents)}",
+        f"Energy: {format_usd(invoice.energy_value_cents)}",
+        f"Infrastructure fee: {format_usd(invoice.infra_fee_cents)}",
+        f"Technical losses: {format_usd(invoice.loss_share_cents)}",
+        f"Total: {format_usd(invoice.total_cents)}",
         "",
         "Where it came from",
     ]
@@ -117,11 +122,11 @@ def invoice_document_lines(
             start = _local(item.started_at, timezone)
             end = _local(item.ended_at, timezone)
             lines.append(
-                f"{start.strftime('%d/%m/%Y %H:%M')} to {end.strftime('%H:%M')}"
+                f"{format_date(start.date())} {format_time(start)} to {format_time(end)}"
                 f" ({_duration(item.started_at, item.ended_at)}), "
                 f"{format_kwh(item.energy_kwh)}, {band_label(item.band_code)}, "
                 f"{item.rate_cents_per_kwh} cents/kWh: "
-                f"{format_brl(item.value_cents)}"
+                f"{format_usd(item.value_cents)}"
             )
     else:
         lines.append("No sessions in the period. No consumption, nothing is charged.")
@@ -141,7 +146,7 @@ def invoice_document_lines(
             f"Validity: {format_date(context.tariff_valid_from)} to {validity_end}",
             (
                 f"Allocation policy: {context.policy_name} "
-                f"(fee {format_brl(context.infra_fee_cents)} per active "
+                f"(fee {format_usd(context.infra_fee_cents)} per active "
                 f"unit, losses {_percent(context.loss_basis_points)})"
             ),
             "",

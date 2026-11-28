@@ -31,7 +31,7 @@ def band_label(code: str) -> str:
 
 def _clock(minute_of_day: int) -> str:
     hour, minute = divmod(minute_of_day % MINUTES_IN_DAY, 60)
-    return f"{hour:02d}:{minute:02d}"
+    return f"{hour % 12 or 12}:{minute:02d} {'AM' if hour < 12 else 'PM'}"
 
 
 def band_hours(band: TariffBand) -> str:

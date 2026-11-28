@@ -16,7 +16,7 @@ import {
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "/api";
 
-const energyFormatter = new Intl.NumberFormat("pt-BR", {
+const energyFormatter = new Intl.NumberFormat("en-US", {
   minimumFractionDigits: 2,
   maximumFractionDigits: 2,
 });

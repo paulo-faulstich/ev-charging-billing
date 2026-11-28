@@ -8,9 +8,12 @@ type ImportHistoryProps = {
   onRefresh: () => void;
 };
 
-const dateFormatter = new Intl.DateTimeFormat("pt-BR", {
-  dateStyle: "short",
-  timeStyle: "short",
+const dateFormatter = new Intl.DateTimeFormat("en-US", {
+  day: "2-digit",
+  month: "2-digit",
+  year: "numeric",
+  hour: "numeric",
+  minute: "2-digit",
   timeZone: "America/Sao_Paulo",
 });
 

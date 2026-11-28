@@ -51,9 +51,10 @@ to `/login`; an authenticated user who opens the root or the login is sent to `/
 
 ## Language and formats
 
-The interface is in English. Currency (`R$ 1.234,56`), numeric dates (`dd/mm/yyyy`) and
-decimal separators keep the Brazilian format used on the invoices, because the scenario is a
-building in Brazil. Month names follow the interface language.
+The interface is in English. Amounts are in US dollars (`$1,234.56`) and numbers use a
+decimal point (`204.29 kWh`). Dates are month-first (`mm/dd/yyyy`) and times use a 12-hour
+clock (`6:29 PM`). The charger export itself stays day-first with a 24-hour clock, because
+that is how the equipment writes it; the import reads it as such.
 
 ## Verify
 

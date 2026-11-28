@@ -27,7 +27,7 @@ const closeStages = [
   "Close month",
 ];
 
-const energyFormatter = new Intl.NumberFormat("pt-BR", {
+const energyFormatter = new Intl.NumberFormat("en-US", {
   minimumFractionDigits: 2,
   maximumFractionDigits: 2,
 });
@@ -593,7 +593,7 @@ function ConsumptionTrend({ summary }: { summary: DashboardSummary }) {
           <dt>Change over the period</dt>
           <dd className={growth > 0 ? "warning" : undefined}>
             {growth >= 0 ? "+" : ""}
-            {growth.toLocaleString("pt-BR", { maximumFractionDigits: 0 })}%
+            {growth.toLocaleString("en-US", { maximumFractionDigits: 0 })}%
           </dd>
         </div>
         <div>
@@ -609,13 +609,13 @@ function ConsumptionTrend({ summary }: { summary: DashboardSummary }) {
         <div>
           <dt>Charger occupancy</dt>
           <dd>
-            {occupancy.toLocaleString("pt-BR", { maximumFractionDigits: 1 })}%
+            {occupancy.toLocaleString("en-US", { maximumFractionDigits: 1 })}%
           </dd>
         </div>
       </dl>
 
       <p className="invoice-note">
-        Occupancy compares the energy delivered with what a 7,5 kW connector
+        Occupancy compares the energy delivered with what a 7.5 kW connector
         would deliver running non-stop. It is low because the garage charges
         mostly at night: a building&apos;s limit is rarely total energy, it is two
         neighbours wanting the same connector on the same evening.

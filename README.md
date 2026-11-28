@@ -14,6 +14,10 @@ can be traced back to the source records.
 
 ![Overview of a closed month: energy, assigned sessions, daily consumption and the closing opinion](docs/screenshots/dashboard.png)
 
+Walkthrough of the interface, recorded on the synthetic July 2026 scenario:
+
+https://github.com/user-attachments/assets/9efad8cd-f240-4b23-9c74-4e3eec6d2d44
+
 ## The problem
 
 Shared chargers in residential buildings create a billing problem, not a charging problem. The
@@ -70,14 +74,14 @@ scenario:
 | Records in the monthly file | 22, of which 21 valid |
 | Energy billed | 204.29 kWh |
 | Invoices | 4, one per active unit |
-| Total | R$ 331.63 |
+| Total | $331.63 |
 
 | Unit | Energy | Total |
 |---|---:|---:|
-| A-101 | 115.030 kWh | R$ 155.03 |
-| A-102 | 46.120 kWh | R$ 84.96 |
-| A-103 | 23.630 kWh | R$ 50.81 |
-| A-104 | 19.510 kWh | R$ 40.83 |
+| A-101 | 115.030 kWh | $155.03 |
+| A-102 | 46.120 kWh | $84.96 |
+| A-103 | 23.630 kWh | $50.81 |
+| A-104 | 19.510 kWh | $40.83 |
 
 Importing the full history afterwards added 132 valid sessions, recognized the 21 already
 imported and rejected four invalid ones. The full file has 157 records and 1,590.40 kWh.
@@ -155,7 +159,7 @@ uv run --project apps/api python apps/api/scripts/seed_demo_july.py
 ```
 
 On a new database the expected result is 21 valid sessions, 204.29 kWh, four invoices and
-R$ 331.63. Then start the interface:
+$331.63. Then start the interface:
 
 ```bash
 AUTH_MODE=fixture pnpm dev:web
